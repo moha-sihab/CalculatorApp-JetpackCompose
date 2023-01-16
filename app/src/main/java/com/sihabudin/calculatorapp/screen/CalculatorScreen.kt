@@ -1,6 +1,8 @@
 package com.sihabudin.calculatorapp.screen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,11 +32,13 @@ fun CalculatorScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
                 .align(Alignment.BottomCenter)
                 .padding(all = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             DisplayCalculate(viewModel = viewModel)
+            OptionSplitNumber(viewModel = viewModel)
             RowOne(viewModel = viewModel)
             RowTwo(viewModel = viewModel)
             RowThree(viewModel = viewModel)
@@ -43,6 +47,7 @@ fun CalculatorScreen(
         }
     }
 }
+
 
 @Composable
 fun DisplayCalculate(
@@ -61,7 +66,7 @@ fun DisplayCalculate(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
             fontWeight = FontWeight.Light,
-            fontSize = 48.sp,
+            fontSize = 32.sp,
             color = NetralVariant80,
             maxLines = 2
         )
@@ -72,11 +77,58 @@ fun DisplayCalculate(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
             fontWeight = FontWeight.Light,
-            fontSize = 48.sp,
+            fontSize = 32.sp,
             color = Color.Black,
-            maxLines = 2
+            maxLines = 10
+        )
+
+        if (viewModel.calculatorState.operation == OperationState.SplitRemainder || viewModel.calculatorState.operation == OperationState.SplitEqual) {
+            Text(
+                text = viewModel.calculatorState.hintInformation,
+                textAlign = TextAlign.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                fontWeight = FontWeight.Light,
+                fontSize = 16.sp,
+                color = Color.Black,
+                maxLines = 2
+            )
+        }
+    }
+}
+
+
+@Composable
+fun OptionSplitNumber(
+    viewModel: CalculatorViewModel,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    )
+    {
+        ButtonCalculator(
+            textButton = "Split Equal",
+            colorBackground = Blue20,
+            sizeText = 16.sp,
+            onClick = { viewModel.setOperation(OperationState.SplitEqual) },
+            modifier = Modifier
+                .aspectRatio(2f)
+                .weight(2f)
+        )
+        ButtonCalculator(
+            textButton = "Split Remainder",
+            colorBackground = Blue20,
+            sizeText = 16.sp,
+            onClick = { viewModel.setOperation(OperationState.SplitRemainder) },
+            modifier = Modifier
+                .aspectRatio(2f)
+                .weight(2f)
         )
     }
+
 }
 
 @Composable
@@ -94,21 +146,14 @@ fun RowOne(
             colorBackground = Red,
             onClick = { viewModel.clearState() },
             modifier = Modifier
-                .aspectRatio(1f)
-                .weight(1f)
+                .aspectRatio(2f)
+                .weight(2f)
         )
         ButtonCalculator(
-            textButton = "D",
+            textButton = "DEL",
             colorBackground = Blue20,
+            sizeText = 16.sp,
             onClick = { viewModel.deleteInput() },
-            modifier = Modifier
-                .aspectRatio(1f)
-                .weight(1f)
-        )
-        ButtonCalculator(
-            textButton = ".",
-            colorBackground = Blue20,
-            onClick = { viewModel.inputDecimal() },
             modifier = Modifier
                 .aspectRatio(1f)
                 .weight(1f)
@@ -269,14 +314,7 @@ fun RowFive(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     )
     {
-        ButtonCalculator(
-            textButton = "000",
-            colorBackground = Blue60,
-            onClick = { viewModel.inputNumber("000") },
-            modifier = Modifier
-                .aspectRatio(1f)
-                .weight(1f)
-        )
+
         ButtonCalculator(
             textButton = "00",
             colorBackground = Blue60,
@@ -289,6 +327,14 @@ fun RowFive(
             textButton = "0",
             colorBackground = Blue60,
             onClick = { viewModel.inputNumber("0") },
+            modifier = Modifier
+                .aspectRatio(1f)
+                .weight(1f)
+        )
+        ButtonCalculator(
+            textButton = ".",
+            colorBackground = Blue20,
+            onClick = { viewModel.inputDecimal() },
             modifier = Modifier
                 .aspectRatio(1f)
                 .weight(1f)

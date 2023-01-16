@@ -6,6 +6,6 @@ sealed class OperationState (val operation: String) {
     object Subtract: OperationState("-")
     object Multiply: OperationState("x")
     object Divide: OperationState("/")
-    object SplitEqual : OperationState("Split Equal")
-    object SplitRemainder : OperationState("Split - Remainder")
+    object SplitEqual : OperationState("=")
+    object SplitRemainder : OperationState("=")
 }

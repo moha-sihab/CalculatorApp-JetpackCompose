@@ -1,10 +1,6 @@
 package com.sihabudin.calculatorapp.core
 
 class Calculator() {
-
-    private var listResult: ArrayList<Double> = ArrayList()
-    var resultState: Any = CalculatorResultState.EmptyResult(null)
-
     fun add(input1: Double, input2: Double): Double {
         return input1.plus(input2)
     }
@@ -21,32 +17,26 @@ class Calculator() {
         return input1.div(input2)
     }
 
-    fun splitEqual(input1: Double, input2: Double) {
-        if (input1 != null && input2 != null && input1 != 0.0 && input2 != 0.0) {
-            val divResult = input1.div(input2)
-            val equalDiv = Array(input2.toInt()) { divResult }
-            listResult.addAll(equalDiv)
-            resultState = CalculatorResultState.ListResult(listResult)
+    fun splitEqual(input1: Double, input2: Double): String {
+        val listResult: ArrayList<String> = ArrayList()
+        val divResult = input1.div(input2)
+        val equalDiv = Array(input2.toInt()) { divResult.toString().removeSuffix(".0") }
+        listResult.addAll(equalDiv)
+        return listResult.toList().toString()
 
-        } else {
-            resultState = CalculatorResultState.EmptyResult(null)
-        }
     }
 
-    fun splitNumRemainder(totalAmount: Int, splitNum: IntArray) : Int {
-        if (totalAmount != 0 && splitNum.isNotEmpty()) {
+    fun splitNumRemainder(totalAmount: Double ,collectiveNumber: String): String {
+        return if (totalAmount != 0.0 && collectiveNumber.isNotEmpty()) {
+            val splitNum = collectiveNumber.split('.').map { it.toInt() }
             val splitNumSum = splitNum.sum()
             if (totalAmount > splitNumSum) {
-                return totalAmount.minus(splitNumSum)
+                totalAmount.minus(splitNumSum).toString()
+            } else {
+                "0"
             }
-            else
-            {
-                return 0
-            }
-        }
-        else
-        {
-            return 0
+        } else {
+            "0"
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sihabudin.calculatorapp.ui.theme.NetralVariant80
@@ -23,6 +24,7 @@ fun ButtonCalculator(
     modifier: Modifier = Modifier,
     colorBackground: Color = Color.Black,
     colorText : Color = Color.White,
+    sizeText : TextUnit = 32.sp,
     onClick: () -> Unit
 ) {
     Box(
@@ -38,7 +40,7 @@ fun ButtonCalculator(
     ) {
         Text(
             text = textButton,
-            fontSize = 48.sp,
+            fontSize = sizeText,
             color = colorText
         )
     }
