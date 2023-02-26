@@ -38,7 +38,6 @@ fun CalculatorScreen(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             DisplayCalculate(viewModel = viewModel)
-            OptionSplitNumber(viewModel = viewModel)
             RowOne(viewModel = viewModel)
             RowTwo(viewModel = viewModel)
             RowThree(viewModel = viewModel)
@@ -96,39 +95,6 @@ fun DisplayCalculate(
             )
         }
     }
-}
-
-
-@Composable
-fun OptionSplitNumber(
-    viewModel: CalculatorViewModel,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    )
-    {
-        ButtonCalculator(
-            textButton = "Split Equal",
-            colorBackground = Blue20,
-            sizeText = 16.sp,
-            onClick = { viewModel.setOperation(OperationState.SplitEqual) },
-            modifier = Modifier
-                .aspectRatio(2f)
-                .weight(2f)
-        )
-        ButtonCalculator(
-            textButton = "Split Remainder",
-            colorBackground = Blue20,
-            sizeText = 16.sp,
-            onClick = { viewModel.setOperation(OperationState.SplitRemainder) },
-            modifier = Modifier
-                .aspectRatio(2f)
-                .weight(2f)
-        )
-    }
-
 }
 
 @Composable
